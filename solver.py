@@ -3,9 +3,8 @@
     GitHub: @ayushwashere
 '''
 
-from threading import currentThread
 from sudoku import Sudoku
-from cell_space import CellSpace
+from emptycell import CellSpace
 
 
 def update_possibilties(sudoku, cell):
@@ -18,10 +17,6 @@ def update_possibilties(sudoku, cell):
 
     updated_values = list(set(curr_values) - set(column_values) - set(row_values) - set(block_values))
     cell.set_new_values(updated_values)
-
-    if len(updated_values) == 1:
-        return True
-    return False
 
 
 
@@ -36,34 +31,29 @@ def create_intial_state_space(sudoku):
     return state
 
 
-
+# in this recursive thing, I need to have a special return for when I have exhausted all possibilities but not solved yet
 def solve_recursive(sudoku, current_state):
     if len(current_state) == 0:
         print()
         print("----------- SOLVED --------")
         print()
         sudoku.display()
+
     else:
         next_state = []
         for cell in current_state:
-            if not cell.is_completed():
-                if update_possibilties(sudoku, cell):
-                    row, column, block = cell.get_identifiers()
-                    value = cell.get_possible_values()[0]
-                    sudoku.set_value(row, column, value)
-                else:
-                    next_state.append(cell)
+            update_possibilties(sudoku, cell)
+            if cell.is_completed():
+                row, column, block = cell.get_identifiers()
+                value = cell.get_possible_values()[0]
+                sudoku.set_value(row, column, value)
+            else:
+                next_state.append(cell)
+        
+        if next_state == current_state:
+            print("Unable to solve using existing numbers")
+            print()
+            sudoku.display()
+            return 
         return solve_recursive(sudoku, next_state)
 
-
-
-
-sudoku_str = "-31-----6;-492---38;-2--1--45;75---6---;2-8--56--;-96-3275-;-62-7---4;--5--93-7;-7-561-2-"
-sudoku = Sudoku(sudoku_str)
-sudoku.display()
-
-current_state = create_intial_state_space(sudoku)
-solve_recursive(sudoku, current_state)
-
-for el in current_state:
-    print(el)
