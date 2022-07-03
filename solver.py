@@ -126,23 +126,23 @@ def backtracking(sudoku):
 # ----------- COMPARISON -----------
 '''
 1. total time taken
-2. count the total number of nodes/states generated
+2. count the total number of nodes/states generated (eh) too many changes for making this work-
 '''
 
 
 def hybrid_backtracking(sudoku):
-
     if sudoku.is_solved:
         return sudoku
 
-    # ??? : do i need to check if the update will run into some problems?? that is if it sets a value that shouldn't be set
-    #       i think the checks in Sudoku.set_value() shuold be able to catch that but idk -- let's see
     extend_fill(sudoku)
-
-
     current_empty = sudoku.get_all_empty_cells()[0]
     row, column = current_empty.get_identifiers()
 
+    '''
+    # --------------- A/B test this approach ------------------
+    # this guy seems very reductant, especially with the hybrid approach since I already know which value will work bext, the only 
+    # additional work this does it making the deepcopies and then put the values in there
+    
     valid_children = []
     for guess_value in current_empty.get_possible_values():
         sudoku_copy = copy.deepcopy(sudoku)
@@ -154,3 +154,13 @@ def hybrid_backtracking(sudoku):
         if type(ret) == Sudoku:
             return ret
     return
+    '''
+
+    for guess_value in current_empty.get_possible_values():
+        sudoku_copy = copy.deepcopy(sudoku)
+        if sudoku_copy.set_value(row, column, guess_value):
+            ret = backtracking(sudoku_copy)
+            if type(ret) == Sudoku:
+                return ret
+    return
+    

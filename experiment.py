@@ -19,3 +19,4 @@ with open('./data/evil.txt') as fp:
 
 
 # store time_taken, number of attempts made and the memory usage for good testing criteria
+# I can store the time taken inside the sudoku itself --
