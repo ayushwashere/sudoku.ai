@@ -18,3 +18,14 @@ in a stable state of the sudoku this means that there is not guarantee that thes
 5. hybird optimizations
 6. scrape multiple sudoku's from somewhere online and extablish a dataset
 7. think about other AI solutions like genetic algorithms, bayesian models and reinforcement learning
+
+How would one generate a sudoku puzzle??
+1. create a random grid
+2. remove a random number 
+3. check if the grid is UNIQUE and solvable
+4. repeat step 2
+
+I feel that generating puzzles at this time is not the best idea...
+instead work on:
+--> bringing this in front of people. implement a GUI
+--> exploring different AI techniques for solving the problem
