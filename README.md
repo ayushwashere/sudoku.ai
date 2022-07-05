@@ -1,7 +1,12 @@
 # Sudoku.ai
 
 ## How to Use
--- make a play file that let's you select which one to use or input a value for a sudoku (from URL?)
+```
+python run.py [mode] [method]
+```
+
+Available Modes: easy, medium, hard, evil
+Available Methods: reduction, backtracking, hybrid
 
 ## Rules of Sudoku
 1. Each row, column and block will have numbers 1-9 without repitition
@@ -41,8 +46,6 @@ This implementation uses two main classes:
 
 ## Metrics for Comparison
 While there are several interesting metrics for comparison of techniques (number of nodes in backtracking, memory used etc.), I decided to use total time as a reasonable metric for comparison between different techniques.
-
-## Results
 
 
 ## Future Work

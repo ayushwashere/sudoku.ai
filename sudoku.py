@@ -32,7 +32,7 @@ class Sudoku:
             print_str = ''.join(row[:3]) + " | " + ''.join(row[3:6]) + " | " + ''.join(row[6:])
             print(print_str)
             if i in [2, 5]:
-                print(" ---- "*3)
+                print("----  "*3)
 
     
     def get_block(self, row, column):
@@ -100,5 +100,3 @@ class Sudoku:
         """
         if len(self.get_all_empty_cells()) == 0:
             self.is_solved = True
-            self.end_time = time.time()
-            self.total_time = self.end_time - self.start_time
