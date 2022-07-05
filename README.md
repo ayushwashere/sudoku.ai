@@ -29,3 +29,10 @@ I feel that generating puzzles at this time is not the best idea...
 instead work on:
 --> bringing this in front of people. implement a GUI
 --> exploring different AI techniques for solving the problem
+
+
+technically it would make more sense if the timing information was stored in the solver and not the sudoku itself
+since i want to run experiments running the sovler and comparing the times etc.
+
+-- create a solver class
+

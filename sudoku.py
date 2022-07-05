@@ -4,6 +4,7 @@
 '''
 
 from emptycell import EmptyCell
+import time
 
 class Sudoku:
     def __init__(self, base_str):
@@ -14,6 +15,10 @@ class Sudoku:
 
         self.grid = parse_input_string(base_str)
         self.is_solved = False
+        
+        self.start_time = time.time()
+        self.end_time = None
+        self.total_time = None
 
 
     def display(self):
@@ -58,7 +63,13 @@ class Sudoku:
 
         if value not in (row_data + column_data + block_data):
             self.grid[row][column] = value
-            if len(self.get_all_empty_cells()) == 0:
-                self.is_solved = True
+            self._check_completed()
             return True
         return False
+
+    
+    def _check_completed(self):
+        if len(self.get_all_empty_cells()) == 0:
+            self.is_solved = True
+            self.end_time = time.time()
+            self.total_time = self.end_time - self.start_time
