@@ -5,8 +5,8 @@
 python run.py [mode] [method]
 ```
 
-Available Modes: easy, medium, hard, evil
-Available Methods: reduction, backtracking, hybrid
+Available Modes: easy, medium, hard, evil  
+Available Methods: reduction, backtracking, hybrid  
 
 ## Rules of Sudoku
 1. Each row, column and block will have numbers 1-9 without repitition
