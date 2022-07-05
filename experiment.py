@@ -4,19 +4,12 @@
 '''
 
 from sudoku import Sudoku
-# import solver
-import backtracking
+import sys
 
-with open('./data/evil.txt') as fp:
-    data = fp.readlines()
-    for sudoku_str in data:
-        sudoku = Sudoku(sudoku_str)
-        sudoku.display()
-        result = backtracking.backtracking(sudoku)
-        print("--------- SOLVED --------")
-        result.display()
+# the user selects a mode (easy, medium, hard, evil)
+# user selects a technique (statespace, backtracking, hybrid)
+# we select a random one from the list and then solve it accordingly -- show time taken
 
+# test all
+# run each sudoku 1-by-1 in all three techniques and then compare the time taken
 
-
-# store time_taken, number of attempts made and the memory usage for good testing criteria
-# I can store the time taken inside the sudoku itself --

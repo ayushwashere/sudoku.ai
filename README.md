@@ -1,38 +1,51 @@
-things to do:
+# Sudoku.ai
 
-1. create something that allows user to interactively use the program with a GUI
-2. create something for collecting sudoku data -- a scraper that reads from somewhere and stores sudoku strongs in our format
-3. solver 1: use simple logic to create a state space model --> for each empty space, we look at all possible elements
+## How to Use
+-- make a play file that let's you select which one to use or input a value for a sudoku (from URL?)
+
+## Rules of Sudoku
+1. Each row, column and block will have numbers 1-9 without repitition
+2. There is a unique solution to each puzzle
+
+## 1. State Space Reduction
+According to the rules of the game, a single number can only be present once in a row, column and block.  
+Thus, for each cell, we evaluate values present in its row, column and block and eliminate all possible options which will create a conflict with this rule. After this elimination process, if only one value is possible then we've found the solution for this cell.
+
+Finding the solution for a single cell propogates changes for several cells related to it. Thus, we repeatedly keep checking all possible cells (as long as a cell was updated in the previous layer)
+
+## 2. Backtracking
+Using the same idea as the State Space Reduction technique but with different mechanics, backtracking assigns a number to an empty cell and recursively keeps doing so as long as the new grid doesn't violate the rules about no repition of numbers in a row, column or block. If there is a violation in the rules, we go back one step and modify the assigned number.
+
+This approach creates a tree of possibilities where each node can have 9 children, one for each guess number in the selected empty cell. 
+
+## 3. Hybrid Backtracking 
+In this Sudoku solution, I implement a combination of the above techniques.  
+
+We start with a backtracking approach where the algorithm makes a valid guess in an empty cell. Based on the value of the guess, there will be changes propagated in the grid. These changes are solved based on the State Space Reduction technique 
+and at each step of the backtracking, we obtain a grid where the maximum number of cells are filled.
+
+This approach successively reduces the number of empty cells, effectively reducing the number of nodes needed in the backtracking tree and reducing the height of the tree. This approach is significantly faster that the previous approaches.
+
+## Data Structure
+This implementation uses two main classes:
+
+### Sudoku
+1. Takes a row-major string formatted such that each empty cell is a '-' and the end of a row is denoted by a semicolon (;)
+2. The Sudoku object has access to the grid as well as functions for accessing values in any row, column or block
+3. Each empty cell is stored as an EmptyCell object which keeps track of which possible values can be placed in that position.
 
 
-the problem with the current data model that whwn we intialize the sudoku, then there are a number of EmptyCells that have possible values = [1...9]
-in a stable state of the sudoku this means that there is not guarantee that these values are stable
-==> the solution to this could be a sudoku.balance() function that updates all the EmptyCell values everytime somethig get's updated... this takes away a lot of the power of manipulating the different kinds of solutions... ideally i want more flexibility in this updatation process.
+### EmptyCell
+1. The EmptyCell stores its location in the grid as well as a list of possible values for the cell
+2. It is not aware of its surrounding cells but it has fields for indicating when the final value of a cell has been reached
+
+## Metrics for Comparison
+While there are several interesting metrics for comparison of techniques (number of nodes in backtracking, memory used etc.), I decided to use total time as a reasonable metric for comparison between different techniques.
+
+## Results
 
 
--- ok so the backtracking works!
-1. turn this into a visual thing on desktop that can show updates in real-time
-2. then think about making this an interactive GUI/game
-3. then think about running this on a hosted website -- so that it can be a real-time comparison
-4. create metrics for comparison of techniques
-5. hybird optimizations
-6. scrape multiple sudoku's from somewhere online and extablish a dataset
-7. think about other AI solutions like genetic algorithms, bayesian models and reinforcement learning
+## Future Work
+As a competitive Sudoku enthusiast, I established several personal tricks and techniques to make smart inferences for filling out empty cells. The methods mentioned above are purely computational and do not take into account locality as well as patterns in the grid that can avoid a lot of computational comparison work.
 
-How would one generate a sudoku puzzle??
-1. create a random grid
-2. remove a random number 
-3. check if the grid is UNIQUE and solvable
-4. repeat step 2
-
-I feel that generating puzzles at this time is not the best idea...
-instead work on:
---> bringing this in front of people. implement a GUI
---> exploring different AI techniques for solving the problem
-
-
-technically it would make more sense if the timing information was stored in the solver and not the sudoku itself
-since i want to run experiments running the sovler and comparing the times etc.
-
--- create a solver class
-
+My long term goal with this project is to try several bayesian, statistical, neural network or reinforced learning techniques that can learn various tricks and patterns in the Sudoku and help me discover new cool shortcuts to improve my own Sudoku game.
